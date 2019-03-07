@@ -1,3 +1,5 @@
+const express = require('express')
+const router = express.Router()
 const request = require('request')
 const memoryCache = require('memory-cache')
 const config = require('../config/wechat.config')
@@ -43,4 +45,9 @@ const useCache = function (req, res, next) {
 	}
 }
 
-module.exports = useCache
+// 作为请求中间件加入
+router.use(function(req, res, next){
+  useCache(req, res, next)
+})
+
+module.exports = router
